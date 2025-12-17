@@ -38,8 +38,8 @@ export default defineConfig({
     prefetchAll: false,
     defaultStrategy: "hover"
   },
-  
-  site: "https://fuwari.oh1.top/",
+
+  site: "https://www.lrdo.net/",
   base: "/",
   trailingSlash: "always",
 
