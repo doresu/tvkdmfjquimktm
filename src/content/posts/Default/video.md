@@ -5,8 +5,8 @@ description: This post demonstrates how to include embedded video in a blog post
 image: "https://api.lxtu.cn/api.php?category=clysj"
 tags: [Example, Video]
 category: Default
-draft: false
-series: true
+draft: true
+series: Examples
 ---
 
 Just copy the embed code from YouTube or other platforms, and paste it in the markdown file.
