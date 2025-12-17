@@ -1,9 +1,8 @@
 ---
-title: Draft Example
-published: 1000-07-01
-image: "https://api.lxtu.cn/api.php?category=ecy"
-tags: [Markdown, Blogging, Demo]
-category: Default
+title: 你好，新的世界
+published: 2025-12-18
+tags: [Markdown, Blogging, ]
+category: blog
 draft: false
 series: Examples
 ---
