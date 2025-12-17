@@ -6,7 +6,7 @@ image: "https://api.lxtu.cn/api.php?category=clysj"
 tags: [Example, Video]
 category: Default
 draft: false
-series: Examples
+series: true
 ---
 
 Just copy the embed code from YouTube or other platforms, and paste it in the markdown file.
