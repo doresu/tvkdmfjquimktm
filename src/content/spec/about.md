@@ -1,19 +1,11 @@
 # About
-![随机图床](https://rba.kanostar.top/adapt)
-
-[/posts/mc/download/](/posts/mc/download/)
-
-本站 `Favicon` 原图取自 [Pixiv @ReRin](https://www.pixiv.net/artworks/113745329)
 
 # 关于&隐私政策
 
 最后更新日期：2025年8月
 
-## 概述
-
-本网站是一个静态网站，采用`Fuwari`框架，使用`MIT`协议开源于`Github`，我们非常重视您的隐私。本隐私政策说明了当您访问我们的网站时，可能收集、使用和披露您信息的方式。
-
-::github{repo="yCENzh/Fuwari-yCENzh"}
+## 概述     
+这是我的个人博客，用于分享我的思考和经验。
 
 ## 网站性质
 
@@ -119,6 +111,11 @@
 ## 适用法律
 
 本隐私政策受中华人民共和国法律管辖。我们努力遵守适用的数据保护法律法规。
+
+## 隐私政策声明
+本网站是一个静态网站，采用`Fuwari`框架，使用`MIT`协议开源于`Github`，我们非常重视您的隐私。本隐私政策说明了当您访问我们的网站时，可能收集、使用和披露您信息的方式。
+
+::github{repo="yCENzh/Fuwari-yCENzh"}
 
 ---
 
