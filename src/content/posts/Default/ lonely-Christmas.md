@@ -3,7 +3,7 @@ title: lonely christmas
 published: 2025-12-25
 tags: [Blogging, Christmas,lonely]
 category: Default
-draft: true
+draft: false
 series: Examples
 ---
 
