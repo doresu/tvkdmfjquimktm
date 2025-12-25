@@ -1,10 +1,11 @@
 ---
 title: 海菜
 published: 2025-12-23
-tags: [ Blogging, 亲情, 故乡, 散文, 离别,非虚构文学 ]
+tags: [ Blogging, 亲情, 故乡, 散文, 离别 ]
 category: blog
 draft: false
 series: Examples
+description: 三年前离家上大学前夕，回老家看望二叔。关于亲情、离别，以及那一袋沉甸甸的海菜。
 ---
 
 > 那盏路灯连同灯下的二叔，缩成了黑夜里一颗遥远的星星。
