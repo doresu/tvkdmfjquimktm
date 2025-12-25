@@ -1,6 +1,7 @@
 ---
 title: lonely christmas
 published: 2025-12-25
+image: "https://g.bigbig.vip/file/AgACAgUAAyEGAAS3T1x1AAMhaU1AdI75WTvRFfR41LjPoKUnwPwAAjgNaxu_LmhWWLrGfij6OhgBAAMCAAN3AAM2BA.png"
 tags: [Blogging, Christmas, lonely]  # 在 "Christmas," 和 "lonely" 之间添加空格
 category: Default
 draft: false
