@@ -61,17 +61,7 @@ export default defineConfig({
       updateBodyClass: false,
       globalInstance: true,
     }),
-    icon({
-      include: {
-        mdi: ["*"],
-        "preprocess: vitePreprocess(),": ["*"],
-        "fa6-brands": ["*"],
-        "fa6-regular": ["*"],
-        "fa6-solid": ["*"],
-      },
-      optimize: true,
-      cache: true,
-    }),
+    icon(),
     expressiveCode({
       themes: [expressiveCodeConfig.theme, expressiveCodeConfig.theme],
       plugins: [
