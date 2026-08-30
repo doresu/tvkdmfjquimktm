@@ -18,27 +18,30 @@ let changeThemeWhenSchemeChanged: (e: MediaQueryListEvent) => void;
 
 onMount(() => {
 	mode = getStoredTheme();
-	
+
 	// 监听系统主题变化（当处于AUTO_MODE时）
 	darkModePreference = window.matchMedia("(prefers-color-scheme: dark)");
-	changeThemeWhenSchemeChanged = (e) => {
+	changeThemeWhenSchemeChanged = (_e) => {
 		// 只有在自动模式下才响应系统主题变化
 		if (mode === AUTO_MODE) {
 			applyThemeToDocument(AUTO_MODE);
 		}
 	};
 	darkModePreference.addEventListener("change", changeThemeWhenSchemeChanged);
-	
+
 	// 清理函数
 	return () => {
-		darkModePreference.removeEventListener("change", changeThemeWhenSchemeChanged);
+		darkModePreference.removeEventListener(
+			"change",
+			changeThemeWhenSchemeChanged,
+		);
 	};
 });
 
 function switchScheme(newMode: LIGHT_DARK_MODE) {
 	mode = newMode;
 	setTheme(newMode);
-	
+
 	// 如果切换到自动模式，立即应用系统主题
 	if (newMode === AUTO_MODE) {
 		applyThemeToDocument(AUTO_MODE);
@@ -63,8 +66,10 @@ function showPanel() {
 		clearTimeout(panelTimeout);
 		panelTimeout = null;
 	}
-	
-	const panel = document.querySelector("#light-dark-panel") as HTMLElement | null;
+
+	const panel = document.querySelector(
+		"#light-dark-panel",
+	) as HTMLElement | null;
 	if (panel) {
 		panel.classList.remove("float-panel-closed");
 	}
@@ -75,9 +80,11 @@ function hidePanel() {
 	if (panelTimeout) {
 		clearTimeout(panelTimeout);
 	}
-	
+
 	panelTimeout = window.setTimeout(() => {
-		const panel = document.querySelector("#light-dark-panel") as HTMLElement | null;
+		const panel = document.querySelector(
+			"#light-dark-panel",
+		) as HTMLElement | null;
 		if (panel) {
 			panel.classList.add("float-panel-closed");
 		}

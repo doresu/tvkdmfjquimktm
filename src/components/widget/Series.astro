@@ -1,25 +1,26 @@
 ---
-import { getSortedPosts } from '../../utils/content-utils'
-import { getPostUrlBySlug } from '../../utils/url-utils'
+import { getSortedPosts } from "../../utils/content-utils";
+import { getPostUrlBySlug } from "../../utils/url-utils";
 
 interface Props {
-  series: string
+	series: string;
 }
 
-const { series } = Astro.props
+const { series } = Astro.props;
 
 // 获取所有文章并筛选出属于指定系列的文章
-const allPosts = await getSortedPosts()
-const seriesPosts = allPosts.filter(post => post.data.series === series)
+const allPosts = await getSortedPosts();
+const seriesPosts = allPosts.filter((post) => post.data.series === series);
 
 // 按时间倒序排列（最新的在前）
-const sortedSeriesPosts = [...seriesPosts].sort((a, b) => 
-  new Date(b.data.published).getTime() - new Date(a.data.published).getTime()
-)
+const sortedSeriesPosts = [...seriesPosts].sort(
+	(a, b) =>
+		new Date(b.data.published).getTime() - new Date(a.data.published).getTime(),
+);
 
 // 设置折叠阈值
-const COLLAPSE_THRESHOLD = 5
-const isCollapsed = sortedSeriesPosts.length > COLLAPSE_THRESHOLD
+const COLLAPSE_THRESHOLD = 5;
+const isCollapsed = sortedSeriesPosts.length > COLLAPSE_THRESHOLD;
 ---
 
 <div class="card-base p-4">

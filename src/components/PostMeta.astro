@@ -5,31 +5,31 @@ import { getCategoryUrl, getTagUrl } from "../utils/url-utils";
 
 // 组件属性接口定义
 interface Props {
-  class: string; // 外部传入的CSS类名
-  published: Date; // 文章发布日期（必需）
-  updated?: Date; // 文章最后更新日期（可选）
-  tags: string[]; // 文章标签数组
-  category: string | null; // 文章分类（可为空）
-  hideTagsForMobile?: boolean; // 是否在移动端隐藏标签
-  hideUpdateDate?: boolean; // 是否隐藏更新日期
+	class: string; // 外部传入的CSS类名
+	published: Date; // 文章发布日期（必需）
+	updated?: Date; // 文章最后更新日期（可选）
+	tags: string[]; // 文章标签数组
+	category: string | null; // 文章分类（可为空）
+	hideTagsForMobile?: boolean; // 是否在移动端隐藏标签
+	hideUpdateDate?: boolean; // 是否隐藏更新日期
 }
 
 // 解构Astro.props获取参数
 const {
-  class: className, // 重命名避免与JS关键字冲突
-  published,
-  updated,
-  tags,
-  category,
-  hideTagsForMobile = false, // 默认在移动端显示标签
-  hideUpdateDate = false, // 默认显示更新日期
+	class: className, // 重命名避免与JS关键字冲突
+	published,
+	updated,
+	tags,
+	category,
+	hideTagsForMobile = false, // 默认在移动端显示标签
+	hideUpdateDate = false, // 默认显示更新日期
 } = Astro.props;
 
 // 预计算更新日期是否需要显示
-const shouldShowUpdated = 
-  !hideUpdateDate && // 未设置隐藏更新日期
-  updated && // 存在更新日期
-  updated.getTime() !== published.getTime(); // 更新日期与发布日期不同
+const shouldShowUpdated =
+	!hideUpdateDate && // 未设置隐藏更新日期
+	updated && // 存在更新日期
+	updated.getTime() !== published.getTime(); // 更新日期与发布日期不同
 
 // 预计算是否有标签
 const hasTags = tags && tags.length > 0;

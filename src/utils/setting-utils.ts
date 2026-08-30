@@ -74,80 +74,80 @@ export function getStoredTheme(): LIGHT_DARK_MODE {
 
 /** 获取当前主题状态 */
 export function isDarkTheme(): boolean {
-  return document.documentElement.classList.contains('dark');
+	return document.documentElement.classList.contains("dark");
 }
 
 /** 初始化主题观察器 */
 function initThemeObserver() {
-  if (themeObserver) return;
-  
-  themeObserver = new MutationObserver(() => {
-    // 使用防抖避免频繁触发
-    if (themeDebounceTimer) {
-      window.clearTimeout(themeDebounceTimer);
-    }
-    
-    themeDebounceTimer = window.setTimeout(() => {
-      const isDark = isDarkTheme();
-      // 通知所有注册的回调函数
-      themeCallbacks.forEach(callback => {
-        try {
-          callback(isDark);
-        } catch (error) {
-          console.warn('Error in theme change callback:', error);
-        }
-      });
-    }, 100);
-  });
+	if (themeObserver) return;
 
-  // 开始观察主题变化
-  themeObserver.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ['class']
-  });
+	themeObserver = new MutationObserver(() => {
+		// 使用防抖避免频繁触发
+		if (themeDebounceTimer) {
+			window.clearTimeout(themeDebounceTimer);
+		}
+
+		themeDebounceTimer = window.setTimeout(() => {
+			const isDark = isDarkTheme();
+			// 通知所有注册的回调函数
+			themeCallbacks.forEach((callback) => {
+				try {
+					callback(isDark);
+				} catch (error) {
+					console.warn("Error in theme change callback:", error);
+				}
+			});
+		}, 100);
+	});
+
+	// 开始观察主题变化
+	themeObserver.observe(document.documentElement, {
+		attributes: true,
+		attributeFilter: ["class"],
+	});
 }
 
 /** 注册主题变化回调函数 */
 export function onThemeChange(callback: ThemeChangeCallback): () => void {
-  // 初始化观察器（如果尚未初始化）
-  initThemeObserver();
-  
-  // 添加回调函数到列表
-  themeCallbacks.push(callback);
-  
-  // 立即执行一次回调函数，提供当前主题状态
-  try {
-    callback(isDarkTheme());
-  } catch (error) {
-    console.warn('Error in theme change callback:', error);
-  }
-  
-  // 返回取消注册的函数
-  return () => {
-    const index = themeCallbacks.indexOf(callback);
-    if (index > -1) {
-      themeCallbacks.splice(index, 1);
-    }
-  };
+	// 初始化观察器（如果尚未初始化）
+	initThemeObserver();
+
+	// 添加回调函数到列表
+	themeCallbacks.push(callback);
+
+	// 立即执行一次回调函数，提供当前主题状态
+	try {
+		callback(isDarkTheme());
+	} catch (error) {
+		console.warn("Error in theme change callback:", error);
+	}
+
+	// 返回取消注册的函数
+	return () => {
+		const index = themeCallbacks.indexOf(callback);
+		if (index > -1) {
+			themeCallbacks.splice(index, 1);
+		}
+	};
 }
 
 /** 销毁主题观察器 */
 export function destroyThemeObserver() {
-  if (themeObserver) {
-    themeObserver.disconnect();
-    themeObserver = null;
-  }
-  
-  if (themeDebounceTimer) {
-    window.clearTimeout(themeDebounceTimer);
-    themeDebounceTimer = null;
-  }
-  
-  // 清空回调函数列表
-  themeCallbacks.length = 0;
+	if (themeObserver) {
+		themeObserver.disconnect();
+		themeObserver = null;
+	}
+
+	if (themeDebounceTimer) {
+		window.clearTimeout(themeDebounceTimer);
+		themeDebounceTimer = null;
+	}
+
+	// 清空回调函数列表
+	themeCallbacks.length = 0;
 }
 
 // 页面卸载时自动销毁观察器
-if (typeof window !== 'undefined') {
-  window.addEventListener('beforeunload', destroyThemeObserver);
+if (typeof window !== "undefined") {
+	window.addEventListener("beforeunload", destroyThemeObserver);
 }

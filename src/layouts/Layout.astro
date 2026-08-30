@@ -4,8 +4,8 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 import ConfigCarrier from "@components/ConfigCarrier.astro";
-import Lightbox from "../components/lightbox.astro";
 import { profileConfig, siteConfig } from "@/config";
+import Lightbox from "../components/lightbox.astro";
 import {
 	AUTO_MODE,
 	BANNER_HEIGHT,
@@ -69,7 +69,7 @@ const bannerOffset =
 >
 	<head>
 		<!-- Microsoft Clarity -->
-		<script type="text/javascript">
+		<script type="text/partytown">
 			(function(c,l,a,r,i,t,y){
 				c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
 				t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
@@ -78,8 +78,8 @@ const bannerOffset =
 		</script>
 		
 		<!-- Google Analytics -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-D8YKHXY480"></script>
-		<script>
+		<script type="text/partytown" src="https://www.googletagmanager.com/gtag/js?id=G-D8YKHXY480"></script>
+		<script type="text/partytown">
 			// Google Analytics setup
 			// biome-ignore lint/suspicious/noExplicitAny: Google Analytics requires any type
 			const dataLayer: any[] = (window as any).dataLayer || [];

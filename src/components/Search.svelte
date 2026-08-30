@@ -4,9 +4,9 @@ import { url } from "@utils/url-utils.ts";
 import { onMount } from "svelte";
 
 // 防抖函数
-function debounce<T extends (...args: any[]) => any>(
+function debounce<T extends (...args: unknown[]) => unknown>(
 	func: T,
-	wait: number
+	wait: number,
 ): (...args: Parameters<T>) => void {
 	let timeout: NodeJS.Timeout;
 	return (...args: Parameters<T>) => {
@@ -24,17 +24,25 @@ interface SearchResult {
 	urlPath?: string;
 }
 
+interface RssPost {
+	title: string;
+	description: string;
+	content: string;
+	link: string;
+	fullLink: string;
+}
+
 let keywordDesktop = "";
 let keywordMobile = "";
 let result: SearchResult[] = [];
 let isSearching = false;
-let posts: any[] = [];
+let posts: RssPost[] = [];
 let rssLoaded = false; // 标记 RSS 是否已加载
 
 // 按需加载 RSS 数据
 const loadRSS = async (): Promise<void> => {
 	if (rssLoaded) return; // 如果已经加载过，直接返回
-	
+
 	try {
 		const response = await fetch("/rss.xml");
 		const text = await response.text();
@@ -45,11 +53,11 @@ const loadRSS = async (): Promise<void> => {
 		posts = Array.from(items).map((item) => {
 			// 尝试多种方式获取content:encoded内容
 			let content = "";
-			const contentEncoded = 
+			const contentEncoded =
 				item.getElementsByTagNameNS("*", "encoded")[0]?.textContent ||
 				item.querySelector("*|encoded")?.textContent ||
 				"";
-			
+
 			if (contentEncoded) {
 				// 移除HTML标签并解码HTML实体
 				const tempDiv = document.createElement("div");
@@ -60,7 +68,7 @@ const loadRSS = async (): Promise<void> => {
 			// 从link中提取相对路径
 			const linkText = item.querySelector("link")?.textContent || "";
 			let relativePath = "";
-			
+
 			// 处理多种可能的URL格式
 			if (linkText.includes("/posts/")) {
 				// 匹配 /posts/ 后的所有内容（包括多级路径）
@@ -70,7 +78,7 @@ const loadRSS = async (): Promise<void> => {
 				}
 			} else {
 				// 如果不包含 /posts/，尝试获取最后的路径部分
-				const urlParts = linkText.split('/').filter(Boolean);
+				const urlParts = linkText.split("/").filter(Boolean);
 				relativePath = urlParts[urlParts.length - 1] || "";
 			}
 
@@ -79,10 +87,10 @@ const loadRSS = async (): Promise<void> => {
 				description: item.querySelector("description")?.textContent || "",
 				content: content,
 				link: relativePath,
-				fullLink: linkText // 保留完整链接以备用
+				fullLink: linkText, // 保留完整链接以备用
 			};
 		});
-		
+
 		rssLoaded = true; // 标记为已加载
 	} catch (error) {
 		console.error("Error fetching RSS:", error);
@@ -106,10 +114,10 @@ const setPanelVisibility = (show: boolean, isDesktop: boolean): void => {
 };
 
 const highlightText = (text: string, keyword: string): string => {
-    if (!keyword) return text;
-    const escapedKeyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const regex = new RegExp(`(${escapedKeyword})`, "gi");
-    return text.replace(regex, "<mark>$1</mark>");
+	if (!keyword) return text;
+	const escapedKeyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+	const regex = new RegExp(`(${escapedKeyword})`, "gi");
+	return text.replace(regex, "<mark>$1</mark>");
 };
 
 // 优化的搜索函数，提升性能
@@ -131,36 +139,40 @@ const search = async (keyword: string, isDesktop: boolean): Promise<void> => {
 			.filter((post) => {
 				// 优化搜索逻辑，减少字符串操作
 				const titleMatch = post.title.toLowerCase().includes(keywordLower);
-				const descMatch = post.description?.toLowerCase().includes(keywordLower);
+				const descMatch = post.description
+					?.toLowerCase()
+					.includes(keywordLower);
 				const linkMatch = post.link.toLowerCase().includes(keywordLower);
 				const contentMatch = post.content.toLowerCase().includes(keywordLower);
-				
+
 				return titleMatch || descMatch || linkMatch || contentMatch;
 			})
 			.map((post) => {
 				const contentLower = post.content.toLowerCase();
 				const contentIndex = contentLower.indexOf(keywordLower);
-				
-				let excerpt = '';
+
+				let excerpt = "";
 				if (contentIndex !== -1) {
 					const start = Math.max(0, contentIndex - 50);
 					const end = Math.min(post.content.length, contentIndex + 100);
 					excerpt = post.content.substring(start, end);
-					if (start > 0) excerpt = '...' + excerpt;
-					if (end < post.content.length) excerpt = excerpt + '...';
+					if (start > 0) excerpt = `...${excerpt}`;
+					if (end < post.content.length) excerpt = `${excerpt}...`;
 				} else {
-					excerpt = post.description || post.content.substring(0, 150) + '...';
+					excerpt = post.description || `${post.content.substring(0, 150)}...`;
 				}
 
-				const postUrl = post.link.startsWith('/') ? post.link : `/posts/${post.link}/`;
+				const postUrl = post.link.startsWith("/")
+					? post.link
+					: `/posts/${post.link}/`;
 
 				return {
 					url: url(postUrl),
 					meta: {
-						title: post.title
+						title: post.title,
 					},
 					excerpt: highlightText(excerpt, keyword),
-					urlPath: postUrl
+					urlPath: postUrl,
 				};
 			});
 
@@ -184,11 +196,11 @@ const debouncedSearch = debounce(search, 300);
 // });
 
 $: if (keywordDesktop !== undefined) {
-    debouncedSearch(keywordDesktop, true);
+	debouncedSearch(keywordDesktop, true);
 }
 
 $: if (keywordMobile !== undefined) {
-    debouncedSearch(keywordMobile, false);
+	debouncedSearch(keywordMobile, false);
 }
 </script>
 
