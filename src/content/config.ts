@@ -15,6 +15,8 @@ const postsCollection = defineCollection({
 
 		series: z.string().optional(),
 
+		author: z.string().optional(),
+
 		/* For internal use */
 		prevTitle: z.string().default(""),
 		prevSlug: z.string().default(""),
